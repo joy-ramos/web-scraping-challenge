@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+  <title>Mission to Mars!</title>
+  
+  <!-- Bootstrap CSS -->
+  
+</head>
+
+<body>
+
+  <div class="container-fluid">
+
+    <div class="jumbotron text-center">
+      <h1>Mission to Mars</h1>
+      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Latest Mars News</h2>
+        <h3 class="heading">{{record[0].news_title}}</h3>
+        <p>{{record[0].news_body}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Featured Mars Image</h2>
+        <img src="{{record[1].featured_image}}" width="100%"/>
+      </div>
+
+      <div class="col-md-6">
+        
+        <div class="row">
+          <h3 class="heading">Current Weather on Mars</h3>
+          {{record[2].mars_weather}}
+        </div>
+
+        <div class="row">
+          
+          <h3 class="heading">Mars Facts</h3>
+
+          <p>{{ record[3].mars_facts|safe }}</p>
+
+        </div>
+        
+
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <h2><strong>Latest Mars News</strong></h2>
+          {% for x in record[4].hemisphere_images %}
+            <li>{{ x.title }}: {{ x.img_url }}</li>
+            <img src="{{ x.img_url }}" class="img-fluid" display="inline-block" width="50%"/>
+          {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>
