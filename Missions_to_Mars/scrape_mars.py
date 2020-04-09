@@ -25,7 +25,7 @@ def scrape_info():
     browser = init_browser()
 
     #Final dictionary to be returned by this function
-    mars_data = []
+    mars_data = {}
 
     
 
@@ -43,7 +43,7 @@ def scrape_info():
     news_title = news_article.find('div', class_='content_title').text
     news_p = news_article.find('div', class_='article_teaser_body').text
     
-    mars_data.append({'news_title': news_title, 'news_body': news_p})
+    mars_data.update({'news_title': news_title, 'news_body': news_p})
 
     # news_title
     # news_p
@@ -64,7 +64,7 @@ def scrape_info():
     url = url.replace('url(', '').replace(')', '')
     complete_url = 'https://www.jpl.nasa.gov' + url
 
-    mars_data.append({'featured_image': complete_url})
+    mars_data.update({'featured_image': complete_url})
     complete_url
 
 
@@ -81,7 +81,7 @@ def scrape_info():
     tweet_p = tweet.p.text    
     mars_weather = tweet_p.replace('\n', ',').replace('\r', ',')
     
-    mars_data.append({'mars_weather': mars_weather})
+    mars_data.update({'mars_weather': mars_weather})
     mars_weather
     
 
@@ -91,9 +91,10 @@ def scrape_info():
     tables = pd.read_html(url)
     
     df = tables[2]
-    df
+    df = df.rename(columns={0: "Desription", 1: "Value"})
+    df = df.to_html(index=False)
     
-    mars_data.append({'mars_facts': df.to_dict()})
+    mars_data.update({'mars_facts': df})
 
 
     #Mars Hemispheres
@@ -129,7 +130,7 @@ def scrape_info():
         
         hemisphere_image_urls.append({'title': title,'img_url':img_url})
         
-    mars_data.append({'hemisphere_images': hemisphere_image_urls})
+    mars_data.update({'hemisphere_images': hemisphere_image_urls})
 
     browser.quit()
     
@@ -137,5 +138,3 @@ def scrape_info():
     print ("\n")
     print (mars_data)
     return (mars_data)
-
-scrape_info()
